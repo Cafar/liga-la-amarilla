@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liga La Amarilla</title>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,50 +13,76 @@
         <h1>Liga La Amarilla</h1>
     </header>
 
-    <main class="carousel">
-        <div class="carousel-wrapper">
+    <!-- Carrusel -->
+    <main class="swiper">
+        <div class="swiper-wrapper">
             <!-- Round 1 -->
-            <section class="round" id="round1">
+            <section class="swiper-slide round" id="round1">
                 <h2>Round 1</h2>
-                <div class="votes">
-                    <div>Equipo Rojo: <span id="round1-red-points">0</span></div>
-                    <div>Equipo Azul: <span id="round1-blue-points">0</span></div>
-                    <div>Equipo Verde: <span id="round1-green-points">0</span></div>
-                    <div>Equipo Amarillo: <span id="round1-yellow-points">0</span></div>
-                </div>
-                <div class="buttons" id="round1-buttons">
-                    <button class="red" onclick="vote('Round1', 'teamRed', 'round1')">Votar Rojo</button>
-                    <button class="blue" onclick="vote('Round1', 'teamBlue', 'round1')">Votar Azul</button>
-                    <button class="green" onclick="vote('Round1', 'teamGreen', 'round1')">Votar Verde</button>
-                    <button class="yellow" onclick="vote('Round1', 'teamYellow', 'round1')">Votar Amarillo</button>
+                <div class="cards">
+                    <div class="card">
+                        <h3>Rojo</h3>
+                        <p id="round1-red-points">0 puntos</p>
+                        <button class="red" onclick="vote('Round1', 'teamRed', 'round1')">Votar</button>
+                    </div>
+                    <div class="card">
+                        <h3>Azul</h3>
+                        <p id="round1-blue-points">0 puntos</p>
+                        <button class="blue" onclick="vote('Round1', 'teamBlue', 'round1')">Votar</button>
+                    </div>
+                    <div class="card">
+                        <h3>Verde</h3>
+                        <p id="round1-green-points">0 puntos</p>
+                        <button class="green" onclick="vote('Round1', 'teamGreen', 'round1')">Votar</button>
+                    </div>
+                    <div class="card">
+                        <h3>Amarillo</h3>
+                        <p id="round1-yellow-points">0 puntos</p>
+                        <button class="yellow" onclick="vote('Round1', 'teamYellow', 'round1')">Votar</button>
+                    </div>
                 </div>
             </section>
 
             <!-- Round 2 -->
-            <section class="round" id="round2">
+            <section class="swiper-slide round" id="round2">
                 <h2>Round 2</h2>
-                <div class="votes">
-                    <div>Equipo Rojo: <span id="round2-red-points">0</span></div>
-                    <div>Equipo Azul: <span id="round2-blue-points">0</span></div>
-                    <div>Equipo Verde: <span id="round2-green-points">0</span></div>
-                    <div>Equipo Amarillo: <span id="round2-yellow-points">0</span></div>
-                </div>
-                <div class="buttons" id="round2-buttons">
-                    <button class="red" onclick="vote('Round2', 'teamRed', 'round2')">Votar Rojo</button>
-                    <button class="blue" onclick="vote('Round2', 'teamBlue', 'round2')">Votar Azul</button>
-                    <button class="green" onclick="vote('Round2', 'teamGreen', 'round2')">Votar Verde</button>
-                    <button class="yellow" onclick="vote('Round2', 'teamYellow', 'round2')">Votar Amarillo</button>
+                <div class="cards">
+                    <div class="card">
+                        <h3>Rojo</h3>
+                        <p id="round2-red-points">0 puntos</p>
+                        <button class="red" onclick="vote('Round2', 'teamRed', 'round2')">Votar</button>
+                    </div>
+                    <div class="card">
+                        <h3>Azul</h3>
+                        <p id="round2-blue-points">0 puntos</p>
+                        <button class="blue" onclick="vote('Round2', 'teamBlue', 'round2')">Votar</button>
+                    </div>
+                    <div class="card">
+                        <h3>Verde</h3>
+                        <p id="round2-green-points">0 puntos</p>
+                        <button class="green" onclick="vote('Round2', 'teamGreen', 'round2')">Votar</button>
+                    </div>
+                    <div class="card">
+                        <h3>Amarillo</h3>
+                        <p id="round2-yellow-points">0 puntos</p>
+                        <button class="yellow" onclick="vote('Round2', 'teamYellow', 'round2')">Votar</button>
+                    </div>
                 </div>
             </section>
-            <!-- Más rounds aquí -->
         </div>
+
+        <!-- Botones de navegación -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </main>
 
     <footer>
-        <button class="carousel-nav prev" onclick="prevSlide()">&#10094;</button>
-        <button class="carousel-nav next" onclick="nextSlide()">&#10095;</button>
+        <p>© 2023 Liga La Amarilla</p>
     </footer>
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parse/3.4.3/parse.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
