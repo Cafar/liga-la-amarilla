@@ -26,7 +26,9 @@ async function vote(roundNumber, team) {
         // Deshabilitar los botones del round
         disableVoting(`round${roundNumber}`);
 
-        alert(response.message);
+        alert("Has votado al equipo:", team);
+
+        window.location.reload();
     } catch (error) {
         console.error(`Error al votar: ${error.message}`);
         alert("Hubo un problema al registrar tu voto.");
@@ -35,31 +37,40 @@ async function vote(roundNumber, team) {
 
 async function loadRoundsData() {
     try {
-        // Llamar a la Cloud Function
         const roundsData = await Parse.Cloud.run("getRoundsData");
         console.log("Datos recibidos de la Cloud Function:", roundsData);
 
-        // Iterar sobre los datos recibidos y cargar en la interfaz
         roundsData.forEach((round) => {
-            const roundId = `round${round.round}`; // Crear el ID del round (e.g., round1, round2)
+            const roundId = `round${round.round}`;
+            const redPoints = document.getElementById(`${roundId}-red-points`);
+            const bluePoints = document.getElementById(`${roundId}-blue-points`);
+            const greenPoints = document.getElementById(`${roundId}-green-points`);
+            const yellowPoints = document.getElementById(`${roundId}-yellow-points`);
 
-            console.log(`Procesando roundId: ${roundId}`); // Depuración
+            // Actualizar puntos y agregar animación
+            updatePoints(redPoints, round.teamRed);
+            updatePoints(bluePoints, round.teamBlue);
+            updatePoints(greenPoints, round.teamGreen);
+            updatePoints(yellowPoints, round.teamYellow);
 
-            // Actualizar los puntos en los elementos correspondientes
-            document.getElementById(`${roundId}-red-points`).textContent = `${round.teamRed} puntos`;
-            document.getElementById(`${roundId}-blue-points`).textContent = `${round.teamBlue} puntos`;
-            document.getElementById(`${roundId}-green-points`).textContent = `${round.teamGreen} puntos`;
-            document.getElementById(`${roundId}-yellow-points`).textContent = `${round.teamYellow} puntos`;
-
-            // Deshabilitar los botones si ya votó
+            // Deshabilitar botones si ya votó
             if (localStorage.getItem(`${roundId}-voted`)) {
                 disableVoting(roundId);
             }
         });
     } catch (error) {
-        console.error(`Error 2: ${error.message}`);
+        console.error(`Error al cargar los datos de los rounds: ${error.message}`);
     }
 }
+
+function updatePoints(element, newValue) {
+    if (element.textContent !== `${newValue} puntos`) {
+        element.textContent = `${newValue} puntos`;
+        element.classList.add("updated"); // Agregar clase para animación
+        setTimeout(() => element.classList.remove("updated"), 1000); // Remover después de 1 segundo
+    }
+}
+
 
 
 // Función para deshabilitar botones de votación
@@ -73,5 +84,30 @@ function disableVoting(roundId) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const swiper = new Swiper('.swiper', {
+        loop: false, // No ciclar las diapositivas
+        centeredSlides: true, // Centramos las diapositivas
+        slidesPerView: 1, // Mostramos solo una diapositiva a la vez
+        spaceBetween: 10, // Espaciado entre diapositivas (puedes ajustar)
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        on: {
+            slideChange: function () {
+                const activeIndex = this.activeIndex; // Obtener el índice activo
+                localStorage.setItem("currentRoundIndex", activeIndex); // Guardar el índice en localStorage
+            },
+        },
+    });
+
+    // Restaurar el índice guardado en localStorage
+    const savedIndex = localStorage.getItem("currentRoundIndex");
+    if (savedIndex !== null) {
+        swiper.slideTo(parseInt(savedIndex, 10), 0); // Moverse al índice guardado
+    }
+
+    // Cargar los datos iniciales para los rounds
     loadRoundsData();
 });
+

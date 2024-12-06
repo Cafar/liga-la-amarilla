@@ -7,11 +7,13 @@ body {
 }
 
 header {
-    text-align: center;
-    padding: 10px;
-    background-color: #1f1f1f;
-    color: #ffda2d;
-    font-size: 1.5rem;
+    background-color: #545454;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffda2d;
 }
 
 footer {
@@ -26,9 +28,9 @@ footer {
 
 /* Swiper */
 .swiper {
-    width: 100%;
     height: calc(100vh - 50px - 50px); /* Restar header y footer */
 }
+
 
 .swiper-wrapper {
     display: flex;
@@ -39,70 +41,157 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    text-align: center;
-    background-color: #404040;
-    padding: 10px;
 }
 
+
 .round h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
     color: #ffda2d;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px #ffda2d, 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 /* Cards */
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 10px;
-    width: 90%;
-    margin: 0 auto;
+    overflow-y: auto; /* Activar scroll vertical */
+}
+
+/* Tarjetas personalizadas */
+.card.red {
+    background: linear-gradient(145deg, #e74c3c, #c0392b); /* Rojo degradado */
+}
+
+.card.blue {
+    background: linear-gradient(145deg, #3498db, #2980b9); /* Azul degradado */
+}
+
+.card.green {
+    background: linear-gradient(145deg, #2ecc71, #27ae60); /* Verde degradado */
+}
+
+.card.yellow {
+    background: linear-gradient(145deg, #ffc371, #ff9a3f); /* Naranja claro degradado */
 }
 
 .card {
-    background-color: #3b3b3b;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 20px;
+    border-radius: 15px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
 
 .card h3 {
     margin: 0;
-    color: #ffda2d;
+    color: #2b2b2b;
 }
 
 .card p {
     margin: 10px 0;
-    font-size: 1rem;
+    font-size: 1.5rem; /* Tamaño más grande */
+    font-weight: bold;
     color: white;
+    
+    border: 2px solid #ffd700; /* Borde dorado */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    background: linear-gradient(145deg, #3b3b3b, #4b4b4b); /* Fondo estilizado */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Sombra para el punto */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.card p.updated {
+    animation: pulse 0.8s infinite; /* Efecto de animación para puntos actualizados */
+    color: #ffd700; /* Amarillo dorado */
+    border-color: #ffffff; /* Cambia el borde temporalmente */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .card button {
     padding: 8px 12px;
     font-size: 1rem;
     border: none;
+    background-color: #2b2b2b;
+    color: yellow;
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.3s, background-color 0.3s;
 }
 
-button.red {
-    background-color: #e74c3c;
+.swiper-button-next, .swiper-button-prev
+{
+    color: yellow;
 }
 
-button.blue {
-    background-color: #3498db;
-}
-
-button.green {
-    background-color: #2ecc71;
-}
-
-button.yellow {
-    background-color: #f1c40f;
-    color: #2b2b2b;
-}
 
 button:hover {
     transform: scale(1.05);
     filter: brightness(1.2);
 }
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #1f1f1f;
+    color: #c4c4c4;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 0.5px;
+    z-index: 10;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #ffda2d; /* Color llamativo para el enlace */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+footer a:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #ffda2d, 0 0 10px #ffda2d; /* Efecto de brillo en hover */
+}
+
+/* Contenedor del logo y el título */
+.logo-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* Espaciado entre el logo y el título */
+}
+
+/* Logo */
+.logo {
+    height: 130px;
+    object-fit: contain; /* Asegura que el logo no se deforme */
+}
+

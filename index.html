@@ -7,36 +7,40 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
     <header>
-        <h1>Liga La Amarilla</h1>
-    </header>
+    <div class="logo-title">
+        <img src="logo.png" alt="Logo Liga La Amarilla" class="logo">
+    </div>
+</header>
+
 
     <!-- Carrusel -->
     <main class="swiper">
         <div class="swiper-wrapper">
             <!-- Round 1 -->
             <section class="swiper-slide round" id="round1">
-                <h2>Round 1</h2>
+                <h2>Juego 1</h2>
                 <div class="cards">
-                    <div class="card">
+                    <div class="card red">
                         <h3>Rojo</h3>
                         <p id="round1-red-points">0 puntos</p>
                         <button class="red" onclick="vote(1, 'teamRed')">Votar</button>
                     </div>
-                    <div class="card">
+                    <div class="card blue">
                         <h3>Azul</h3>
                         <p id="round1-blue-points">0 puntos</p>
                         <button class="blue" onclick="vote(1, 'teamBlue')">Votar</button>
                     </div>
-                    <div class="card">
+                    <div class="card green">
                         <h3>Verde</h3>
                         <p id="round1-green-points">0 puntos</p>
                         <button class="green" onclick="vote(1, 'teamGreen')">Votar</button>
                     </div>
-                    <div class="card">
-                        <h3>Amarillo</h3>
+                    <div class="card yellow">
+                        <h3>Naranja</h3>
                         <p id="round1-yellow-points">0 puntos</p>
                         <button class="yellow" onclick="vote(1, 'teamYellow')">Votar</button>
                     </div>
@@ -45,31 +49,194 @@
 
             <!-- Round 2 -->
             <section class="swiper-slide round" id="round2">
-                <h2>Round 2</h2>
+                <h2>Juego 2</h2>
                 <div class="cards">
-                    <div class="card">
+                    <div class="card red">
                         <h3>Rojo</h3>
                         <p id="round2-red-points">0 puntos</p>
                         <button class="red" onclick="vote(2, 'teamRed')">Votar</button>
                     </div>
-                    <div class="card">
+                    <div class="card blue"">
                         <h3>Azul</h3>
                         <p id="round2-blue-points">0 puntos</p>
                         <button class="blue" onclick="vote(2, 'teamBlue')">Votar</button>
                     </div>
-                    <div class="card">
+                    <div class="card green">
                         <h3>Verde</h3>
                         <p id="round2-green-points">0 puntos</p>
                         <button class="green" onclick="vote(2, 'teamGreen')">Votar</button>
                     </div>
-                    <div class="card">
-                        <h3>Amarillo</h3>
+                    <div class="card yellow">
+                        <h3>Naranja</h3>
                         <p id="round2-yellow-points">0 puntos</p>
                         <button class="yellow" onclick="vote(2, 'teamYellow')">Votar</button>
                     </div>
                 </div>
             </section>
+
+            <!-- Round 3 -->
+            <section class="swiper-slide round" id="round3">
+                <h2>Juego 3</h2>
+                <div class="cards">
+                    <div class="card red">
+                        <h3>Rojo</h3>
+                        <p id="round3-red-points">0 puntos</p>
+                        <button class="red" onclick="vote(3, 'teamRed')">Votar</button>
+                    </div>
+                    <div class="card blue"">
+                        <h3>Azul</h3>
+                        <p id="round3-blue-points">0 puntos</p>
+                        <button class="blue" onclick="vote(3, 'teamBlue')">Votar</button>
+                    </div>
+                    <div class="card green">
+                        <h3>Verde</h3>
+                        <p id="round3-green-points">0 puntos</p>
+                        <button class="green" onclick="vote(3, 'teamGreen')">Votar</button>
+                    </div>
+                    <div class="card yellow">
+                        <h3>Naranja</h3>
+                        <p id="round3-yellow-points">0 puntos</p>
+                        <button class="yellow" onclick="vote(3, 'teamYellow')">Votar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Round 4 -->
+            <section class="swiper-slide round" id="round4">
+                <h2>Juego 4</h2>
+                <div class="cards">
+                    <div class="card red">
+                        <h3>Rojo</h3>
+                        <p id="round4-red-points">0 puntos</p>
+                        <button class="red" onclick="vote(4, 'teamRed')">Votar</button>
+                    </div>
+                    <div class="card blue">
+                        <h3>Azul</h3>
+                        <p id="round4-blue-points">0 puntos</p>
+                        <button class="blue" onclick="vote(4, 'teamBlue')">Votar</button>
+                    </div>
+                    <div class="card green">
+                        <h3>Verde</h3>
+                        <p id="round4-green-points">0 puntos</p>
+                        <button class="green" onclick="vote(4, 'teamGreen')">Votar</button>
+                    </div>
+                    <div class="card yellow">
+                        <h3>Naranja</h3>
+                        <p id="round4-yellow-points">0 puntos</p>
+                        <button class="yellow" onclick="vote(4, 'teamYellow')">Votar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Round 5 -->
+            <section class="swiper-slide round" id="round5">
+                <h2>Juego 5</h2>
+                <div class="cards">
+                    <div class="card red">
+                        <h3>Rojo</h3>
+                        <p id="round5-red-points">0 puntos</p>
+                        <button class="red" onclick="vote(5, 'teamRed')">Votar</button>
+                    </div>
+                    <div class="card blue"">
+                        <h3>Azul</h3>
+                        <p id="round5-blue-points">0 puntos</p>
+                        <button class="blue" onclick="vote(5, 'teamBlue')">Votar</button>
+                    </div>
+                    <div class="card green">
+                        <h3>Verde</h3>
+                        <p id="round5-green-points">0 puntos</p>
+                        <button class="green" onclick="vote(5, 'teamGreen')">Votar</button>
+                    </div>
+                    <div class="card yellow">
+                        <h3>Naranja</h3>
+                        <p id="round5-yellow-points">0 puntos</p>
+                        <button class="yellow" onclick="vote(5, 'teamYellow')">Votar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Round 6 -->
+            <section class="swiper-slide round" id="round6">
+                <h2>Juego 6</h2>
+                <div class="cards">
+                    <div class="card red">
+                        <h3>Rojo</h3>
+                        <p id="round6-red-points">0 puntos</p>
+                        <button class="red" onclick="vote(6, 'teamRed')">Votar</button>
+                    </div>
+                    <div class="card blue">
+                        <h3>Azul</h3>
+                        <p id="round6-blue-points">0 puntos</p>
+                        <button class="blue" onclick="vote(6, 'teamBlue')">Votar</button>
+                    </div>
+                    <div class="card green">
+                        <h3>Verde</h3>
+                        <p id="round6-green-points">0 puntos</p>
+                        <button class="green" onclick="vote(6, 'teamGreen')">Votar</button>
+                    </div>
+                    <div class="card yellow">
+                        <h3>Naranja</h3>
+                        <p id="round6-yellow-points">0 puntos</p>
+                        <button class="yellow" onclick="vote(6, 'teamYellow')">Votar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Round 7 -->
+            <section class="swiper-slide round" id="round7">
+                <h2>Juego 7</h2>
+                <div class="cards">
+                    <div class="card red">
+                        <h3>Rojo</h3>
+                        <p id="round7-red-points">0 puntos</p>
+                        <button class="red" onclick="vote(7, 'teamRed')">Votar</button>
+                    </div>
+                    <div class="card blue">
+                        <h3>Azul</h3>
+                        <p id="round7-blue-points">0 puntos</p>
+                        <button class="blue" onclick="vote(7, 'teamBlue')">Votar</button>
+                    </div>
+                    <div class="card green">
+                        <h3>Verde</h3>
+                        <p id="round7-green-points">0 puntos</p>
+                        <button class="green" onclick="vote(7, 'teamGreen')">Votar</button>
+                    </div>
+                    <div class="card yellow">
+                        <h3>Naranja</h3>
+                        <p id="round7-yellow-points">0 puntos</p>
+                        <button class="yellow" onclick="vote(7, 'teamYellow')">Votar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Round 8 -->
+            <section class="swiper-slide round" id="round8">
+                <h2>¡Desempate!</h2>
+                <div class="cards">
+                    <div class="card red">
+                        <h3>Rojo</h3>
+                        <p id="round8-red-points">0 puntos</p>
+                        <button class="red" onclick="vote(8, 'teamRed')">Votar</button>
+                    </div>
+                    <div class="card blue">
+                        <h3>Azul</h3>
+                        <p id="round8-blue-points">0 puntos</p>
+                        <button class="blue" onclick="vote(8, 'teamBlue')">Votar</button>
+                    </div>
+                    <div class="card green">
+                        <h3>Verde</h3>
+                        <p id="round8-green-points">0 puntos</p>
+                        <button class="green" onclick="vote(8, 'teamGreen')">Votar</button>
+                    </div>
+                    <div class="card yellow">
+                        <h3>Naranja</h3>
+                        <p id="round8-yellow-points">0 puntos</p>
+                        <button class="yellow" onclick="vote(8, 'teamYellow')">Votar</button>
+                    </div>
+                </div>
+            </section>
         </div>
+
 
         <!-- Botones de navegación -->
         <div class="swiper-button-prev"></div>
@@ -77,7 +244,7 @@
     </main>
 
     <footer>
-        <p>© 2024 Liga La Amarilla</p>
+        <p>© 2024 Liga La Amarilla - Web creada por <a href="http://rafacarneros.net" target="_blank">Rafa Carneros</a></p>
     </footer>
 
     <!-- Swiper JS -->
