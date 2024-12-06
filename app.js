@@ -58,7 +58,7 @@ async function loadRoundsData() {
             }
         });
     } catch (error) {
-        console.error(`Error al cargar los datos de los rounds: ${error.message}`);
+        console.error(`Error: ${error.message}`);
     }
 }
 
