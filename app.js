@@ -1,7 +1,8 @@
 // Configuración de Parse
-const PARSE_APP_ID = "ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ";
-const PARSE_REST_API_KEY = "hZkEJwwVbgfHO5d7o54e2yTEE7fOmH8SFrLted1g";
+Parse.initialize("ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ", "hZkEJwwVbgfHO5d7o54e2yTEE7fOmH8SFrLted1g");
+Parse.serverURL = "https://parseapi.back4app.com";
 const PARSE_SERVER_URL = "https://parseapi.back4app.com/functions/getRoundsData";
+
 
 // Inicializar Swiper
 const swiper = new Swiper('.swiper', {
@@ -40,27 +41,12 @@ async function vote(roundName, team, roundId) {
 
 async function loadRoundsData() {
     try {
-        // Hacer la solicitud POST
-        const response = await fetch(PARSE_SERVER_URL, {
-            method: "POST",
-            headers: {
-                "X-Parse-Application-Id": PARSE_APP_ID,
-                "X-Parse-REST-API-Key": PARSE_REST_API_KEY,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({}) // Cuerpo vacío ya que no se necesitan parámetros
-        });
-
-        // Verificar si la respuesta es exitosa
-        if (!response.ok) {
-            throw new Error(`Error en la solicitud: ${response.statusText}`);
-        }
-
-        const roundsData = await response.json();
-        console.log("Datos recibidos:", roundsData);
+        // Llamar a la Cloud Function
+        const roundsData = await Parse.Cloud.run("getRoundsData");
+        console.log("Datos recibidos de la Cloud Function:", roundsData);
 
         // Iterar sobre los datos recibidos y cargar en la interfaz
-        roundsData.result.forEach((round) => {
+        roundsData.forEach((round) => {
             const roundId = `round${round.round}`; // Crear el ID del round (e.g., round1, round2)
 
             console.log(`Procesando roundId: ${roundId}`); // Depuración
@@ -77,7 +63,7 @@ async function loadRoundsData() {
             }
         });
     } catch (error) {
-        console.error("Error al cargar los datos de los rounds:", error);
+        console.error(`Error 2: ${error.message}`);
     }
 }
 
