@@ -23,22 +23,22 @@
                     <div class="card">
                         <h3>Rojo</h3>
                         <p id="round1-red-points">0 puntos</p>
-                        <button class="red" onclick="vote('Round1', 'teamRed', 'round1')">Votar</button>
+                        <button class="red" onclick="vote(1, 'teamRed')">Votar</button>
                     </div>
                     <div class="card">
                         <h3>Azul</h3>
                         <p id="round1-blue-points">0 puntos</p>
-                        <button class="blue" onclick="vote('Round1', 'teamBlue', 'round1')">Votar</button>
+                        <button class="blue" onclick="vote(1, 'teamBlue')">Votar</button>
                     </div>
                     <div class="card">
                         <h3>Verde</h3>
                         <p id="round1-green-points">0 puntos</p>
-                        <button class="green" onclick="vote('Round1', 'teamGreen', 'round1')">Votar</button>
+                        <button class="green" onclick="vote(1, 'teamGreen')">Votar</button>
                     </div>
                     <div class="card">
                         <h3>Amarillo</h3>
                         <p id="round1-yellow-points">0 puntos</p>
-                        <button class="yellow" onclick="vote('Round1', 'teamYellow', 'round1')">Votar</button>
+                        <button class="yellow" onclick="vote(1, 'teamYellow')">Votar</button>
                     </div>
                 </div>
             </section>
@@ -50,22 +50,22 @@
                     <div class="card">
                         <h3>Rojo</h3>
                         <p id="round2-red-points">0 puntos</p>
-                        <button class="red" onclick="vote('Round2', 'teamRed', 'round2')">Votar</button>
+                        <button class="red" onclick="vote(2, 'teamRed')">Votar</button>
                     </div>
                     <div class="card">
                         <h3>Azul</h3>
                         <p id="round2-blue-points">0 puntos</p>
-                        <button class="blue" onclick="vote('Round2', 'teamBlue', 'round2')">Votar</button>
+                        <button class="blue" onclick="vote(2, 'teamBlue')">Votar</button>
                     </div>
                     <div class="card">
                         <h3>Verde</h3>
                         <p id="round2-green-points">0 puntos</p>
-                        <button class="green" onclick="vote('Round2', 'teamGreen', 'round2')">Votar</button>
+                        <button class="green" onclick="vote(2, 'teamGreen')">Votar</button>
                     </div>
                     <div class="card">
                         <h3>Amarillo</h3>
                         <p id="round2-yellow-points">0 puntos</p>
-                        <button class="yellow" onclick="vote('Round2', 'teamYellow', 'round2')">Votar</button>
+                        <button class="yellow" onclick="vote(2, 'teamYellow')">Votar</button>
                     </div>
                 </div>
             </section>
@@ -77,17 +77,12 @@
     </main>
 
     <footer>
-        <p>© 2023 Liga La Amarilla</p>
+        <p>© 2024 Liga La Amarilla</p>
     </footer>
 
     <!-- Swiper JS -->
-    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
-    <script>
-        Parse.initialize("ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ", "N84W4tFPD9TFu6dsCIjddsJtNrZFLBc6ChshauCx");
-        Parse.serverURL = "https://parseapi.back4app.com/";
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-    
+    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

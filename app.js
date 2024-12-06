@@ -1,3 +1,8 @@
+// Configuración de Parse
+Parse.initialize("ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ", "N84W4tFPD9TFu6dsCIjddsJtNrZFLBc6ChshauCx");
+Parse.serverURL = "https://parseapi.back4app.com";
+
+
 // Inicializar Swiper
 const swiper = new Swiper('.swiper', {
     loop: true,
@@ -7,29 +12,24 @@ const swiper = new Swiper('.swiper', {
     },
 });
 
-// Función para votar
-async function vote(roundName, team, roundId) {
-    const Round = Parse.Object.extend(roundName);
-    const query = new Parse.Query(Round);
-
+async function vote(roundNumber, team) {
     try {
-        // Obtener el registro del round
-        const round = await query.first();
-        if (round) {
-            // Incrementar puntos del equipo
-            round.increment(team, 1);
-            await round.save();
+        // Llamar a la Cloud Function con roundNumber y team
+        const response = await Parse.Cloud.run("voteForTeam", {
+            roundNumber: roundNumber, // Número del round
+            team: team,               // Equipo (e.g., "teamRed")
+        });
 
-            // Guardar el estado de votación en localStorage
-            localStorage.setItem(`${roundId}-voted`, true);
+        // Marcar el round como votado en localStorage
+        localStorage.setItem(`round${roundNumber}-voted`, true);
 
-            // Deshabilitar botones
-            disableVoting(roundId);
+        // Deshabilitar los botones del round
+        disableVoting(`round${roundNumber}`);
 
-            alert(`¡Votaste por el equipo seleccionado!`);
-        }
+        alert(response.message);
     } catch (error) {
         console.error(`Error al votar: ${error.message}`);
+        alert("Hubo un problema al registrar tu voto.");
     }
 }
 
