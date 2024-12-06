@@ -37,27 +37,20 @@ async function vote(roundName, team, roundId) {
     }
 }
 
-// Función para cargar puntos de un round
-async function loadPoints(roundName, roundId) {
-    const Round = Parse.Object.extend(roundName);
-    const query = new Parse.Query(Round);
-
+async function loadRoundsData() {
     try {
-        // Obtener el registro del round
-        const round = await query.first();
-        if (round) {
-            document.getElementById(`${roundId}-red-points`).textContent = round.get("teamRed") || 0;
-            document.getElementById(`${roundId}-blue-points`).textContent = round.get("teamBlue") || 0;
-            document.getElementById(`${roundId}-green-points`).textContent = round.get("teamGreen") || 0;
-            document.getElementById(`${roundId}-yellow-points`).textContent = round.get("teamYellow") || 0;
+        const roundsData = await Parse.Cloud.run("getRoundsData");
 
-            // Deshabilitar botones si ya votó
-            if (localStorage.getItem(`${roundId}-voted`)) {
-                disableVoting(roundId);
-            }
-        }
+        // Iterar sobre los datos recibidos y cargar en la interfaz
+        roundsData.forEach((round) => {
+            const roundId = `round${round.name.replace("Round", "")}`;
+            document.getElementById(`${roundId}-red-points`).textContent = `${round.teamRed} puntos`;
+            document.getElementById(`${roundId}-blue-points`).textContent = `${round.teamBlue} puntos`;
+            document.getElementById(`${roundId}-green-points`).textContent = `${round.teamGreen} puntos`;
+            document.getElementById(`${roundId}-yellow-points`).textContent = `${round.teamYellow} puntos`;
+        });
     } catch (error) {
-        console.error(`Error al cargar puntos de ${roundName}: ${error.message}`);
+        console.error(`Error al cargar los datos de los rounds: ${error.message}`);
     }
 }
 
@@ -71,10 +64,6 @@ function disableVoting(roundId) {
     });
 }
 
-// Cargar puntos al inicializar la página
 document.addEventListener("DOMContentLoaded", () => {
-    // Cargar los puntos para todos los rounds
-    for (let i = 1; i <= 5; i++) {
-        loadPoints(`Round${i}`, `round${i}`);
-    }
+    loadRoundsData();
 });
