@@ -7,7 +7,17 @@ body {
 }
 
 header {
+    position: fixed; /* Fijo en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Asegurar que esté sobre el contenido */
     background-color: #545454;
+    color: #ffda2d;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 header h1 {
@@ -17,15 +27,18 @@ header h1 {
 }
 
 footer {
-    text-align: center;
-    padding: 10px;
+    position: fixed; /* Fijo en la parte inferior */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
     background-color: #1f1f1f;
     color: #c4c4c4;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+    
 }
-
 /* Swiper */
 .swiper {
     height: calc(100vh - 50px - 50px); /* Restar header y footer */
@@ -40,26 +53,29 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center; /* Centrar las tarjetas verticalmente */
+    height: calc(100vh - 100px); /* Ajusta el tamaño para incluir header y footer */
+    overflow-y: hidden; /* Evita el scroll si no es necesario */
 }
 
 
+
+.round {
+    margin-top: 60px; /* Compensar la altura del header fijo */
+    padding: 20px; /* Espacio adicional alrededor */
+    box-sizing: border-box;
+}
+
+/* Estilos para el título (h2) */
 .round h2 {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 20px;
     color: #ffda2d;
-    text-transform: uppercase;
+    text-align: center;
     text-shadow: 0 0 5px #ffda2d, 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-/* Cards */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 10px;
-    overflow-y: auto; /* Activar scroll vertical */
-}
 
 /* Tarjetas personalizadas */
 .card.red {
@@ -78,18 +94,32 @@ footer {
     background: linear-gradient(145deg, #ffc371, #ff9a3f); /* Naranja claro degradado */
 }
 
-.card {
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
-    color: white;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+/* Configurar el grid de 2x2 para las tarjetas */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
+    gap: 20px; /* Espaciado entre las tarjetas */
+    width: 100%;
+    max-width: 600px; /* Ancho máximo para el grid */
+    margin: 0 auto; /* Centrar el grid horizontalmente */
 }
+
+/* Tarjetas */
+.card {
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background-color: #3b3b3b;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efecto de zoom */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+}
+
+
 
 
 .card h3 {
@@ -98,17 +128,15 @@ footer {
 }
 
 .card p {
-    margin: 10px 0;
-    font-size: 1.5rem; /* Tamaño más grande */
+    font-size: 1.2rem; /* Reducir tamaño del texto */
     font-weight: bold;
     color: white;
-    
+    margin: 10px 0;
     border: 2px solid #ffd700; /* Borde dorado */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 10px; /* Espaciado interno */
-    background: linear-gradient(145deg, #3b3b3b, #4b4b4b); /* Fondo estilizado */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Sombra para el punto */
-    transition: transform 0.3s ease, color 0.3s ease;
+    border-radius: 10px;
+    padding: 5px; /* Espaciado interno reducido */
+    background: linear-gradient(145deg, #3b3b3b, #4b4b4b);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .card p.updated {
@@ -129,6 +157,8 @@ footer {
     }
 }
 
+
+
 .card button {
     padding: 8px 12px;
     font-size: 1rem;
@@ -142,27 +172,13 @@ footer {
 
 .swiper-button-next, .swiper-button-prev
 {
-    color: yellow;
+    display: none;
 }
 
 
 button:hover {
     transform: scale(1.05);
     filter: brightness(1.2);
-}
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #1f1f1f;
-    color: #c4c4c4;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: 0.9rem;
-    font-family: 'Arial', sans-serif;
-    letter-spacing: 0.5px;
-    z-index: 10;
 }
 
 footer p {
@@ -191,7 +207,7 @@ footer a:hover {
 
 /* Logo */
 .logo {
-    height: 130px;
+    height: 60px;
     object-fit: contain; /* Asegura que el logo no se deforme */
 }
 

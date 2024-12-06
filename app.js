@@ -26,12 +26,9 @@ async function vote(roundNumber, team) {
         // Deshabilitar los botones del round
         disableVoting(`round${roundNumber}`);
 
-        alert("Has votado al equipo:", team);
-
         window.location.reload();
     } catch (error) {
         console.error(`Error al votar: ${error.message}`);
-        alert("Hubo un problema al registrar tu voto.");
     }
 }
 
@@ -64,8 +61,8 @@ async function loadRoundsData() {
 }
 
 function updatePoints(element, newValue) {
-    if (element.textContent !== `${newValue} puntos`) {
-        element.textContent = `${newValue} puntos`;
+    if (element.textContent !== `${newValue} votos`) {
+        element.textContent = `${newValue} votos`;
         element.classList.add("updated"); // Agregar clase para animación
         setTimeout(() => element.classList.remove("updated"), 1000); // Remover después de 1 segundo
     }
@@ -85,29 +82,28 @@ function disableVoting(roundId) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const swiper = new Swiper('.swiper', {
-        loop: false, // No ciclar las diapositivas
+        loop: true, // No repetir las diapositivas
         centeredSlides: true, // Centramos las diapositivas
         slidesPerView: 1, // Mostramos solo una diapositiva a la vez
-        spaceBetween: 10, // Espaciado entre diapositivas (puedes ajustar)
+        spaceBetween: 0, // Sin espacio entre las diapositivas
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
         on: {
             slideChange: function () {
-                const activeIndex = this.activeIndex; // Obtener el índice activo
-                localStorage.setItem("currentRoundIndex", activeIndex); // Guardar el índice en localStorage
+                const activeIndex = this.activeIndex; // Guardar el índice activo
+                localStorage.setItem("currentRoundIndex", activeIndex);
             },
         },
     });
 
-    // Restaurar el índice guardado en localStorage
+    // Restaurar el round activo al recargar la página
     const savedIndex = localStorage.getItem("currentRoundIndex");
     if (savedIndex !== null) {
-        swiper.slideTo(parseInt(savedIndex, 10), 0); // Moverse al índice guardado
+        swiper.slideTo(parseInt(savedIndex, 10), 0);
     }
 
-    // Cargar los datos iniciales para los rounds
+    // Cargar los datos iniciales
     loadRoundsData();
 });
-
