@@ -1,8 +1,7 @@
 // Configuración de Parse
-Parse.initialize("ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ", "hZkEJwwVbgfHO5d7o54e2yTEE7fOmH8SFrLted1g");
-Parse.serverURL = "https://parseapi.back4app.com";
+const PARSE_APP_ID = "ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ";
+const PARSE_REST_API_KEY = "hZkEJwwVbgfHO5d7o54e2yTEE7fOmH8SFrLted1g";
 const PARSE_SERVER_URL = "https://parseapi.back4app.com/functions/getRoundsData";
-
 
 // Inicializar Swiper
 const swiper = new Swiper('.swiper', {
