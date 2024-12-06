@@ -1,96 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liga La Amarilla</title>
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="styles.css">
-
-    <script
-         type="text/javascript"
-         src="https://npmcdn.com/parse/dist/parse.min.js"
-       ></script>
-</head>
-<body>
-    <header>
-        <h1>Liga La Amarilla</h1>
-    </header>
-
-    <!-- Carrusel -->
-    <main class="swiper">
-        <div class="swiper-wrapper">
-            <!-- Round 1 -->
-            <section class="swiper-slide round" id="round1">
-                <h2>Round 1</h2>
-                <div class="cards">
-                    <div class="card">
-                        <h3>Rojo</h3>
-                        <p id="round1-red-points">0 puntos</p>
-                        <button class="red" onclick="vote('Round1', 'teamRed', 'round1')">Votar</button>
-                    </div>
-                    <div class="card">
-                        <h3>Azul</h3>
-                        <p id="round1-blue-points">0 puntos</p>
-                        <button class="blue" onclick="vote('Round1', 'teamBlue', 'round1')">Votar</button>
-                    </div>
-                    <div class="card">
-                        <h3>Verde</h3>
-                        <p id="round1-green-points">0 puntos</p>
-                        <button class="green" onclick="vote('Round1', 'teamGreen', 'round1')">Votar</button>
-                    </div>
-                    <div class="card">
-                        <h3>Amarillo</h3>
-                        <p id="round1-yellow-points">0 puntos</p>
-                        <button class="yellow" onclick="vote('Round1', 'teamYellow', 'round1')">Votar</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Round 2 -->
-            <section class="swiper-slide round" id="round2">
-                <h2>Round 2</h2>
-                <div class="cards">
-                    <div class="card">
-                        <h3>Rojo</h3>
-                        <p id="round2-red-points">0 puntos</p>
-                        <button class="red" onclick="vote('Round2', 'teamRed', 'round2')">Votar</button>
-                    </div>
-                    <div class="card">
-                        <h3>Azul</h3>
-                        <p id="round2-blue-points">0 puntos</p>
-                        <button class="blue" onclick="vote('Round2', 'teamBlue', 'round2')">Votar</button>
-                    </div>
-                    <div class="card">
-                        <h3>Verde</h3>
-                        <p id="round2-green-points">0 puntos</p>
-                        <button class="green" onclick="vote('Round2', 'teamGreen', 'round2')">Votar</button>
-                    </div>
-                    <div class="card">
-                        <h3>Amarillo</h3>
-                        <p id="round2-yellow-points">0 puntos</p>
-                        <button class="yellow" onclick="vote('Round2', 'teamYellow', 'round2')">Votar</button>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Botones de navegación -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-    </main>
-
-    <footer>
-        <p>© 2023 Liga La Amarilla</p>
-    </footer>
-
-    <!-- Swiper JS -->
-    <script>
-        Parse.initialize("ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ", "hZkEJwwVbgfHO5d7o54e2yTEE7fOmH8SFrLted1g");
-        Parse.serverURL = "https://parseapi.back4app.com/";
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-    <script src="app.js"></script>
-</body>
-</html>
+1   <!DOCTYPE html>
+2   <html>
+3     <head>
+4       <meta charset="utf-8" />
+5       <!-- This is the minified production version of parse js -->
+6       <script
+7         type="text/javascript"
+8         src="https://npmcdn.com/parse/dist/parse.min.js"
+9       ></script>
+10    </head>
+11    <body>
+12      <h1>JS SDK</h1>
+13      <input id="username" type="text" placeholder="Username" />
+14      <input id="email" type="email" placeholder="Email" />
+15      <input id="password" type="password" placeholder="Password" />
+16      <button id="createButton">Create User</button>
+17    </body>
+18    <script>
+19      // Initialize Parse
+20      Parse.initialize("ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ", "hZkEJwwVbgfHO5d7o54e2yTEE7fOmH8SFrLted1g"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+21      Parse.serverURL = "https://parseapi.back4app.com/";
+22  
+23      // Create a new User
+24      async function createParseUser() {
+25        // Creates a new Parse "User" object, which is created by default in your Parse app
+26        let user = new Parse.User();
+27        // Set the input values to the new "User" object
+28        user.set("username", document.getElementById("username").value);
+29        user.set("email", document.getElementById("email").value);
+30        user.set("password", document.getElementById("password").value);
+31        try {
+32          // Call the save method, which returns the saved object if successful
+33          user = await user.save();
+34          if (user !== null) {
+35            // Notify the success by getting the attributes from the "User" object, by using the get method (the id attribute needs to be accessed directly, though)
+36            alert(
+37              `New object created with success! ObjectId: ${
+38                user.id
+39              }, ${user.get("username")}`
+40            );
+41          }
+42        } catch (error) {
+43          alert(`Error: ${error.message}`);
+44        }
+45      }
+46  
+47      // Add on click listener to call the create parse user function
+48      document.getElementById("createButton").addEventListener("click", async function () {
+49        createParseUser();
+50      });
+51    </script>
+52  </html>
