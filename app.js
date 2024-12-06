@@ -50,13 +50,13 @@ async function loadRoundsData() {
             updatePoints(greenPoints, round.teamGreen);
             updatePoints(yellowPoints, round.teamYellow);
 
-            // Calcular y mostrar el total de ganadores
-            const teamWins = calculateTotalWins(roundsData);
-            displayTotalWins(teamWins);
             // Deshabilitar botones si ya votó
             if (localStorage.getItem(`${roundId}-voted`)) {
                 disableVoting(roundId);
             }
+
+            // Calcular y mostrar los ganadores por ronda
+            displayGlobalWinner(roundsData);
         });
     } catch (error) {
         console.error(`Error al cargar los datos de los rounds: ${error.message}`);
@@ -71,57 +71,6 @@ function updatePoints(element, newValue) {
     }
 }
 
-
-function calculateTotalWins(roundsData) {
-    const teamWins = {
-        teamRed: 0,
-        teamBlue: 0,
-        teamGreen: 0,
-        teamYellow: 0,
-    };
-
-    // Iterar sobre cada ronda para calcular ganadores
-    roundsData.forEach((round) => {
-        const teams = {
-            teamRed: round.teamRed || 0,
-            teamBlue: round.teamBlue || 0,
-            teamGreen: round.teamGreen || 0,
-            teamYellow: round.teamYellow || 0,
-        };
-
-        // Ignorar rondas con votos totales iguales a 0
-        const totalVotes = Object.values(teams).reduce((sum, votes) => sum + votes, 0);
-        if (totalVotes === 0) {
-            return; // Saltar esta ronda
-        }
-
-        // Determinar el máximo de votos
-        const maxVotes = Math.max(...Object.values(teams));
-        const winners = Object.keys(teams).filter((team) => teams[team] === maxVotes);
-
-        // Sumar una "X" a cada equipo ganador
-        winners.forEach((team) => {
-            teamWins[team]++;
-        });
-    });
-
-    return teamWins;
-}
-
-function displayTotalWins(teamWins) {
-    const winnerContainer = document.getElementById("total-wins");
-
-    // Construir el HTML con el recuento de "X" para cada equipo
-    let resultHTML = '<h3>Resultados Totales:</h3>';
-    Object.entries(teamWins).forEach(([team, wins]) => {
-        const teamName = team.replace('team', 'Equipo '); // Formatear el nombre
-        if (wins > 0) {
-            resultHTML += `<p>${teamName}: ${'X '.repeat(wins)}</p>`;
-        }
-    });
-
-    winnerContainer.innerHTML = resultHTML;
-}
 
 
 // Función para deshabilitar botones de votación
@@ -144,20 +93,95 @@ document.addEventListener("DOMContentLoaded", () => {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
-        on: {
-            slideChange: function () {
-                const activeIndex = this.activeIndex; // Guardar el índice activo
-                localStorage.setItem("currentRoundIndex", activeIndex);
-            },
-        },
     });
 
     // Restaurar el round activo al recargar la página
     const savedIndex = localStorage.getItem("currentRoundIndex");
-    if (savedIndex !== null) {
-        swiper.slideTo(parseInt(savedIndex, 10), 0);
+    if (savedIndex !== null && !isNaN(savedIndex)) {
+        swiper.slideToLoop(parseInt(savedIndex, 10), 0); // Navegar al índice guardado
+    } else {
+        swiper.slideTo(0, 0); // Ir a la primera diapositiva si no hay índice guardado
     }
-
     // Cargar los datos iniciales
     loadRoundsData();
 });
+
+function calculateGlobalWinner(roundsData) {
+    const teamWins = {
+        Rojo: 0,
+        Azul: 0,
+        Verde: 0,
+        Naranja: 0,
+    };
+
+    // Calcular las victorias por equipo
+    roundsData.forEach((round) => {
+        const teams = {
+            Rojo: round.teamRed || 0,
+            Azul: round.teamBlue || 0,
+            Verde: round.teamGreen || 0,
+            Naranja: round.teamYellow || 0,
+        };
+
+        // Determinar el máximo de votos
+        const maxVotes = Math.max(...Object.values(teams));
+        const winningTeams = Object.keys(teams).filter(
+            (team) => teams[team] === maxVotes && maxVotes > 0
+        );
+
+        // Incrementar el contador de victorias para los equipos ganadores
+        winningTeams.forEach((team) => {
+            teamWins[team]++;
+        });
+    });
+
+    // Determinar el equipo con más victorias
+    const maxWins = Math.max(...Object.values(teamWins));
+    const globalWinners = Object.keys(teamWins).filter(
+        (team) => teamWins[team] === maxWins
+    );
+
+    return { teamWins, globalWinners, maxWins };
+}
+
+function displayGlobalWinner(roundsData) {
+    const { teamWins, globalWinners, maxWins } = calculateGlobalWinner(roundsData);
+
+    // Mostrar el ganador global
+    const globalWinnerText = document.getElementById("global-winner");
+    if (globalWinners.length === 1) {
+        globalWinnerText.textContent = `Equipo ${globalWinners[0]}: ${maxWins} rondas ganadas`;
+    } else if (globalWinners.length > 1) {
+        globalWinnerText.textContent = `Empate entre: ${globalWinners.join(
+            " y "
+        )} (${maxWins} rondas ganadas cada uno)`;
+    } else {
+        globalWinnerText.textContent = "Sin ganador global";
+    }
+
+    // Mostrar los ganadores por ronda
+    const roundsWinnersContainer = document.getElementById("rounds-winners");
+    roundsWinnersContainer.innerHTML = "";
+    roundsData.forEach((round, index) => {
+        const teams = {
+            Rojo: round.teamRed || 0,
+            Azul: round.teamBlue || 0,
+            Verde: round.teamGreen || 0,
+            Naranja: round.teamYellow || 0,
+        };
+
+        const maxVotes = Math.max(...Object.values(teams));
+        const winningTeams = Object.keys(teams).filter(
+            (team) => teams[team] === maxVotes && maxVotes > 0
+        );
+
+        const roundWinnerHTML = `
+            <p><strong>Ronda ${index + 1}:</strong> ${
+            winningTeams.length > 0
+                ? winningTeams.join(" y ") + ` (${maxVotes} votos)`
+                : "Sin ganador"
+        }</p>
+        `;
+        roundsWinnersContainer.innerHTML += roundWinnerHTML;
+    });
+}

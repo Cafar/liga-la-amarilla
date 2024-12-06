@@ -211,30 +211,42 @@ footer a:hover {
     object-fit: contain; /* Asegura que el logo no se deforme */
 }
 
-.card.total-summary {
-    background-color: #3b3b3b;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    margin: 20px auto; /* Centrar horizontalmente y separar verticalmente */
-    width: 80%; /* Ajustar al 80% del contenedor */
-    max-width: 600px; /* Limitar el ancho máximo */
-    
-}
-
-.card.total-summary h3 {
-    font-size: 1.2rem;
+#global-winner {
+    font-size: 2rem;
     font-weight: bold;
     color: #ffda2d;
-    margin-bottom: 10px;
+    margin: 20px 0;
 }
 
-.card.total-summary p {
-    font-size: 1rem;
+#rounds-winners p {
+    font-size: 1.2rem;
     color: white;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    margin: 5px 0;
+    margin: 15px 0;
+    background: linear-gradient(145deg, #3b3b3b, #4b4b4b);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+#final-summary h3 {
+    font-size: 1.8rem; /* Tamaño más grande */
+    font-weight: bold; /* Negrita para destacar */
+    color: #ffda2d; /* Amarillo vibrante */
+    margin-bottom: 15px; /* Espaciado inferior */
+    text-align: center; /* Centrado del texto */
+    border-bottom: 2px solid #ffd700; /* Línea decorativa debajo */
+    padding-bottom: 5px; /* Espaciado entre texto y línea */
 }
 
 
+#final-summary {
+    background-color: #3b3b3b;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+    width: 90%; /* Ajustar al 90% del contenedor */
+    max-width: 600px; /* Limitar el ancho máximo */
+}
