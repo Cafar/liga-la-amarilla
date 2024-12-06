@@ -1,9 +1,3 @@
-// Configuración de Parse
-Parse.initialize("ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ", "hZkEJwwVbgfHO5d7o54e2yTEE7fOmH8SFrLted1g");
-Parse.serverURL = "https://parseapi.back4app.com";
-const PARSE_SERVER_URL = "https://parseapi.back4app.com/functions/getRoundsData";
-
-
 // Inicializar Swiper
 const swiper = new Swiper('.swiper', {
     loop: true,
