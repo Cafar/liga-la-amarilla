@@ -50,6 +50,9 @@ async function loadRoundsData() {
             updatePoints(greenPoints, round.teamGreen);
             updatePoints(yellowPoints, round.teamYellow);
 
+            // Calcular y mostrar el total de ganadores
+            const teamWins = calculateTotalWins(roundsData);
+            displayTotalWins(teamWins);
             // Deshabilitar botones si ya votó
             if (localStorage.getItem(`${roundId}-voted`)) {
                 disableVoting(roundId);
@@ -68,6 +71,57 @@ function updatePoints(element, newValue) {
     }
 }
 
+
+function calculateTotalWins(roundsData) {
+    const teamWins = {
+        teamRed: 0,
+        teamBlue: 0,
+        teamGreen: 0,
+        teamYellow: 0,
+    };
+
+    // Iterar sobre cada ronda para calcular ganadores
+    roundsData.forEach((round) => {
+        const teams = {
+            teamRed: round.teamRed || 0,
+            teamBlue: round.teamBlue || 0,
+            teamGreen: round.teamGreen || 0,
+            teamYellow: round.teamYellow || 0,
+        };
+
+        // Ignorar rondas con votos totales iguales a 0
+        const totalVotes = Object.values(teams).reduce((sum, votes) => sum + votes, 0);
+        if (totalVotes === 0) {
+            return; // Saltar esta ronda
+        }
+
+        // Determinar el máximo de votos
+        const maxVotes = Math.max(...Object.values(teams));
+        const winners = Object.keys(teams).filter((team) => teams[team] === maxVotes);
+
+        // Sumar una "X" a cada equipo ganador
+        winners.forEach((team) => {
+            teamWins[team]++;
+        });
+    });
+
+    return teamWins;
+}
+
+function displayTotalWins(teamWins) {
+    const winnerContainer = document.getElementById("total-wins");
+
+    // Construir el HTML con el recuento de "X" para cada equipo
+    let resultHTML = '<h3>Resultados Totales:</h3>';
+    Object.entries(teamWins).forEach(([team, wins]) => {
+        const teamName = team.replace('team', 'Equipo '); // Formatear el nombre
+        if (wins > 0) {
+            resultHTML += `<p>${teamName}: ${'X '.repeat(wins)}</p>`;
+        }
+    });
+
+    winnerContainer.innerHTML = resultHTML;
+}
 
 
 // Función para deshabilitar botones de votación

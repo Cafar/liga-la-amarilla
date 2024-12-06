@@ -61,7 +61,7 @@ footer {
 
 
 .round {
-    margin-top: 60px; /* Compensar la altura del header fijo */
+    margin-top: 0; /* Compensar la altura del header fijo */
     padding: 20px; /* Espacio adicional alrededor */
     box-sizing: border-box;
 }
@@ -210,4 +210,31 @@ footer a:hover {
     height: 60px;
     object-fit: contain; /* Asegura que el logo no se deforme */
 }
+
+.card.total-summary {
+    background-color: #3b3b3b;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin: 20px auto; /* Centrar horizontalmente y separar verticalmente */
+    width: 80%; /* Ajustar al 80% del contenedor */
+    max-width: 600px; /* Limitar el ancho máximo */
+    
+}
+
+.card.total-summary h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffda2d;
+    margin-bottom: 10px;
+}
+
+.card.total-summary p {
+    font-size: 1rem;
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    margin: 5px 0;
+}
+
 
