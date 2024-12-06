@@ -39,15 +39,23 @@ async function vote(roundName, team, roundId) {
 
 async function loadRoundsData() {
     try {
+        // Llamar a la Cloud Function
         const roundsData = await Parse.Cloud.run("getRoundsData");
 
         // Iterar sobre los datos recibidos y cargar en la interfaz
         roundsData.forEach((round) => {
-            const roundId = `round${round.name.replace("Round", "")}`;
+            const roundId = `round${round.round}`; // Crear el ID del round (e.g., round1, round2)
+
+            // Actualizar los puntos en los elementos correspondientes
             document.getElementById(`${roundId}-red-points`).textContent = `${round.teamRed} puntos`;
             document.getElementById(`${roundId}-blue-points`).textContent = `${round.teamBlue} puntos`;
             document.getElementById(`${roundId}-green-points`).textContent = `${round.teamGreen} puntos`;
             document.getElementById(`${roundId}-yellow-points`).textContent = `${round.teamYellow} puntos`;
+
+            // Deshabilitar los botones si ya votó
+            if (localStorage.getItem(`${roundId}-voted`)) {
+                disableVoting(roundId);
+            }
         });
     } catch (error) {
         console.error(`Error al cargar los datos de los rounds: ${error.message}`);
