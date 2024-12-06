@@ -145,23 +145,37 @@ function calculateGlobalWinner(roundsData) {
 }
 
 function displayGlobalWinner(roundsData) {
+    const globalWinnerText = document.getElementById("global-winner");
+    const roundsWinnersContainer = document.getElementById("rounds-winners-grid");
+
+    if (!globalWinnerText) {
+        console.error("El elemento #global-winner no se encuentra en el DOM.");
+        return;
+    }
+
+    if (!roundsWinnersContainer) {
+        console.error("El elemento #rounds-winners-grid no se encuentra en el DOM.");
+        return;
+    }
+
+    // Continuar con la lógica si los elementos existen...
     const { teamWins, globalWinners, maxWins } = calculateGlobalWinner(roundsData);
 
-    // Mostrar el ganador global
-    const globalWinnerText = document.getElementById("global-winner");
     if (globalWinners.length === 1) {
         globalWinnerText.textContent = `Equipo ${globalWinners[0]}: ${maxWins} rondas ganadas`;
+        globalWinnerText.style.backgroundColor = getTeamColor(globalWinners[0]);
     } else if (globalWinners.length > 1) {
         globalWinnerText.textContent = `Empate entre: ${globalWinners.join(
             " y "
         )} (${maxWins} rondas ganadas cada uno)`;
+        globalWinnerText.style.backgroundColor = "#3b3b3b"; // Gris neutro en caso de empate
     } else {
         globalWinnerText.textContent = "Sin ganador global";
+        globalWinnerText.style.backgroundColor = "#3b3b3b";
     }
 
-    // Mostrar los ganadores por ronda
-    const roundsWinnersContainer = document.getElementById("rounds-winners");
-    roundsWinnersContainer.innerHTML = "";
+    // Mostrar los ganadores por ronda en un grid
+    roundsWinnersContainer.innerHTML = ""; // Limpiar contenido previo
     roundsData.forEach((round, index) => {
         const teams = {
             Rojo: round.teamRed || 0,
@@ -175,8 +189,14 @@ function displayGlobalWinner(roundsData) {
             (team) => teams[team] === maxVotes && maxVotes > 0
         );
 
+        let roundClass = "round-winner-none";
+        if (winningTeams.length === 1) {
+            roundClass = `round-winner-${winningTeams[0].toLowerCase()}`;
+        }
+
         const roundWinnerHTML = `
-            <p><strong>Ronda ${index + 1}:</strong> ${
+            <p class="${roundClass}">
+                <strong>Ronda ${index + 1}:</strong> ${
             winningTeams.length > 0
                 ? winningTeams.join(" y ") + ` (${maxVotes} votos)`
                 : "Sin ganador"
@@ -184,4 +204,20 @@ function displayGlobalWinner(roundsData) {
         `;
         roundsWinnersContainer.innerHTML += roundWinnerHTML;
     });
+}
+
+
+function getTeamColor(teamName) {
+    switch (teamName.toLowerCase()) {
+        case "rojo":
+            return "#e74c3c";
+        case "azul":
+            return "#3498db";
+        case "verde":
+            return "#2ecc71";
+        case "amarillo":
+            return "#f1c40f";
+        default:
+            return "#3b3b3b"; // Gris neutro
+    }
 }

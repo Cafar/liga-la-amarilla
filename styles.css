@@ -1,6 +1,7 @@
 /* Estilos Generales */
 body {
     font-family: Arial, sans-serif;
+    background: linear-gradient(145deg, #2b2b2b, #1f1f1f); /* Degradado sutil */
     background-color: #2b2b2b;
     color: white;
     margin: 0;
@@ -110,7 +111,7 @@ footer {
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    background-color: #3b3b3b;
+    background-color: #000000;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -211,23 +212,63 @@ footer a:hover {
     object-fit: contain; /* Asegura que el logo no se deforme */
 }
 
-#global-winner {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ffda2d;
-    margin: 20px 0;
+.global.card{
+    transform: none;
 }
 
-#rounds-winners p {
-    font-size: 1.2rem;
-    color: white;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    margin: 15px 0;
-    background: linear-gradient(145deg, #3b3b3b, #4b4b4b);
+#global-winner {
+    font-size: 2.5rem; /* Tamaño más grande */
+    font-weight: bold;
+    color: #ffda2d;
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #3b3b3b, #4b4b4b); /* Fondo más atractivo */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 15px #ffd700; /* Sombras y brillo */
+    text-shadow: 0 0 15px #ffd700, 0 0 30px #ffda2d; /* Brillo para el texto */
+    animation: pulse 1.5s infinite; /* Animación de pulsación */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 10px #ffd700, 0 0 20px #ffda2d;
+    }
+    50% {
+        transform: scale(1.05);
+        text-shadow: 0 0 20px #ffd700, 0 0 40px #ffda2d;
+    }
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 10px #ffd700, 0 0 20px #ffda2d;
+    }
+}
+
+
+#rounds-winners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajustar al tamaño */
+    gap: 15px; /* Espaciado entre tarjetas */
+    padding: 20px;
+}
+
+#rounds-winners-grid p {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffda2d;
+    text-align: center;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(145deg, #3b3b3b, #4b4b4b); /* Fondo degradado */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 10px #ffd700; /* Sombras y brillo */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+#rounds-winners-grid p:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el cursor */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7), 0 0 15px #ffda2d; /* Aumentar brillo */
+}
+
 
 #final-summary h3 {
     font-size: 1.8rem; /* Tamaño más grande */
