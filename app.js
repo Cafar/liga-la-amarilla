@@ -158,7 +158,9 @@ function displayGlobalWinner(roundsData) {
         return;
     }
 
-    // Continuar con la lógica si los elementos existen...
+  
+
+    // Continuar con la lógica si hay al menos 6 rondas
     const { teamWins, globalWinners, maxWins } = calculateGlobalWinner(roundsData);
 
     if (globalWinners.length === 1) {
@@ -172,6 +174,13 @@ function displayGlobalWinner(roundsData) {
     } else {
         globalWinnerText.textContent = "Sin ganador global";
         globalWinnerText.style.backgroundColor = "#3b3b3b";
+    }
+
+    const round6 = roundsData.find((round) => round.round === 6);
+
+    if (!round6 || (round6.teamRed === 0 && round6.teamBlue === 0 && round6.teamGreen === 0 && round6.teamYellow === 0)) {
+        globalWinnerText.textContent = "Aún no lo sabemos...";
+        globalWinnerText.style.backgroundColor = "#3b3b3b"; // Fondo neutro
     }
 
     // Mostrar los ganadores por ronda en un grid
@@ -205,6 +214,7 @@ function displayGlobalWinner(roundsData) {
         roundsWinnersContainer.innerHTML += roundWinnerHTML;
     });
 }
+
 
 
 function getTeamColor(teamName) {
