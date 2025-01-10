@@ -1,19 +1,20 @@
-/* Estilos Generales */
+/* ==========================================
+   1. General Styles
+========================================== */
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(145deg, #2b2b2b, #1f1f1f); /* Degradado sutil */
     background-color: #2b2b2b;
     color: white;
     margin: 0;
     padding: 0;
 }
 
+/* ==========================================
+   2. Header
+========================================== */
 header {
-    position: fixed; /* Fijo en la parte superior */
-    top: 0;
-    left: 0;
     width: 100%;
-    z-index: 10; /* Asegurar que esté sobre el contenido */
+    z-index: 10;
     background-color: #545454;
     color: #ffda2d;
     text-align: center;
@@ -22,14 +23,23 @@ header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-header h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffda2d;
+.logo-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* Espaciado entre el logo y el título */
 }
 
+.logo {
+    height: 60px;
+    object-fit: contain; /* Asegura que el logo no se deforme */
+}
+
+/* ==========================================
+   3. Footer
+========================================== */
 footer {
-    position: fixed; /* Fijo en la parte inferior */
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -39,113 +49,152 @@ footer {
     text-align: center;
     padding: 10px;
     font-size: 0.9rem;
-    
-}
-/* Swiper */
-.swiper {
-    height: calc(100vh - 50px - 50px); /* Restar header y footer */
 }
 
-
-.swiper-wrapper {
-    display: flex;
-}
-
-.swiper-slide {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Centrar las tarjetas verticalmente */
-    height: auto; /* Ajusta el tamaño para incluir header y footer */
-    overflow-y: hidden; /* Evita el scroll si no es necesario */
-}
-
-
-
-.round {
-    margin-top: 0; /* Compensar la altura del header fijo */
-    padding: 20px; /* Espacio adicional alrededor */
+/* ==========================================
+   4. Game Selection and Voting
+========================================== */
+#game-selection, #game-voting {
     padding-top: 100px;
-    box-sizing: border-box;
+    text-align: center;
 }
 
-/* Estilos para el título (h2) */
-.round h2 {
-    font-size: 1.5rem;
+.game-selection h1, .voting h1 {
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 20px;
     color: #ffda2d;
-    text-align: center;
     text-shadow: 0 0 5px #ffda2d, 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
+.game-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-/* Tarjetas personalizadas */
-.card.red {
-    background: linear-gradient(145deg, #e74c3c, #c0392b); /* Rojo degradado */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px auto;
+    flex-wrap: wrap;
+}
+
+/* ==========================================
+   5. Buttons
+========================================== */
+.game-btn {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #3b3b3b, #4b3b3b);
+    color: #ffda2d;
+    text-shadow: 0 0 5px #ffd700, 0 0 10px rgba(255, 223, 0, 0.8);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.game-btn:disabled {
+    background: #545454;
+    color: #777;
+    cursor: not-allowed;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.game-btn:hover:enabled {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5), 0 0 10px #ffd700;
+}
+
+/* Contenedor para el botón de reinicio */
+.reset-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 100px; /* Espacio adicional debajo del botón */
+}
+
+
+/* Botón de reinicio */
+.reset-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.reset-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ==========================================
+   6. Cards
+========================================== */
+.card {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, #3b3b3b, #4b4b4b);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
 }
 
 .card.blue {
     background: linear-gradient(145deg, #3498db, #2980b9); /* Azul degradado */
 }
 
-.card.green {
-    background: linear-gradient(145deg, #2ecc71, #27ae60); /* Verde degradado */
+.card.red {
+    background: linear-gradient(145deg, #e74c3c, #c0392b); /* Rojo degradado */
 }
 
-.card.yellow {
-    background: linear-gradient(145deg, #ffc371, #ff9a3f); /* Naranja claro degradado */
+.card h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-/* Configurar el grid de 2x2 para las tarjetas */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
-    gap: 20px; /* Espaciado entre las tarjetas */
-    width: 100%;
-    max-width: 600px; /* Ancho máximo para el grid */
-    margin: 0 auto; /* Centrar el grid horizontalmente */
-}
-
-/* Tarjetas */
-.card {
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    background-color: #000000;
+.card button {
+    margin-top: 15px;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2b2b2b;
+    color: #ffda2d;
+    cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card:hover {
-    transform: scale(1.05); /* Efecto de zoom */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+.card button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 10px #ffd700;
 }
 
-
-
-
-.card h3 {
-    margin: 0;
-    color: #2b2b2b;
-}
-
-.card p {
-    font-size: 1.2rem; /* Reducir tamaño del texto */
-    font-weight: bold;
-    color: white;
-    margin: 10px 0;
-    border: 2px solid #ffd700; /* Borde dorado */
-    border-radius: 10px;
-    padding: 5px; /* Espaciado interno reducido */
-    background: linear-gradient(145deg, #3b3b3b, #4b4b4b);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-}
-
+/* ==========================================
+   7. Animations
+========================================== */
 .card p.updated {
     animation: pulse 0.8s infinite; /* Efecto de animación para puntos actualizados */
-    color: #ffd700; /* Amarillo dorado */
-    border-color: #ffffff; /* Cambia el borde temporalmente */
+    color: #ffd700;
 }
 
 @keyframes pulse {
@@ -160,169 +209,240 @@ footer {
     }
 }
 
-
-
-.card button {
-    padding: 8px 12px;
-    font-size: 1rem;
-    border: none;
-    background-color: #2b2b2b;
-    color: yellow;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.3s, background-color 0.3s;
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.swiper-button-next, .swiper-button-prev
-{
-    display: none;
+/* ==========================================
+   8. Results Section
+========================================== */
+.results {
+    padding-top: 50px;
+    text-align: center;
 }
 
 
-button:hover {
-    transform: scale(1.05);
-    filter: brightness(1.2);
-}
-
-footer p {
-    margin: 0;
-}
-
-footer a {
-    color: #ffda2d; /* Color llamativo para el enlace */
-    text-decoration: none;
+.results h1 {
+    font-size: 2rem;
     font-weight: bold;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
+    color: #ffda2d;
+    text-shadow: 0 0 5px #ffda2d, 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-footer a:hover {
-    color: #fff;
-    text-shadow: 0 0 5px #ffda2d, 0 0 10px #ffda2d; /* Efecto de brillo en hover */
-}
-
-/* Contenedor del logo y el título */
-.logo-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px; /* Espaciado entre el logo y el título */
-}
-
-/* Logo */
-.logo {
-    height: 60px;
-    object-fit: contain; /* Asegura que el logo no se deforme */
-}
-
-
-
-/* Contenedor Principal del Sumario Final */
-#final-summary {
-    background: linear-gradient(145deg, #2b2b2b, #1f1f1f); /* Fondo degradado oscuro */
-    border-radius: 15px; /* Bordes redondeados */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
-    padding: 20px; /* Espaciado interno */
-    margin: 20px auto; /* Centrar y espaciar el contenedor */
-    max-width: 90%; /* Ancho máximo relativo */
-    text-align: center; /* Centrar el contenido */
-    overflow-y: auto; /* Scroll interno si es necesario */
-}
-
-/* Título del Ganador Global */
-#final-summary h3 {
-    font-size: 1.8rem; /* Tamaño del texto */
-    font-weight: bold; /* Resaltar texto */
-    color: #ffda2d; /* Amarillo vibrante */
-    padding-top: 80px;
-    margin-bottom: 15px; /* Espaciado inferior */
-    text-transform: uppercase; /* Texto en mayúsculas */
-    text-shadow: 0 0 10px #ffd700, 0 0 20px rgba(255, 223, 0, 0.8); /* Brillo en el texto */
-}
-
-/* Texto del Ganador Global */
-#global-winner {
-    font-size: calc(1.5rem + 1vw); /* Tamaño dinámico */
-    font-weight: bold;
-    color: #ffffff; /* Texto blanco */
-    background: linear-gradient(145deg, #3b3b3b, #4b4b4b); /* Fondo degradado */
-    padding: 15px; /* Espaciado interno */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3), 0 0 10px #ffd700; /* Sombra y brillo */
-    margin-bottom: 30px; /* Más espacio debajo del ganador global */
-}
-
-/* Contenedor del Grid de Ganadores */
-#rounds-winners-grid {
+.results-grid {
+    flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajustar dinámicamente columnas */
-    gap: 15px; /* Espaciado entre elementos */
-    padding: 10px; /* Espaciado interno */
-    justify-content: center; /* Centrar los elementos */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
 }
 
-/* Tarjetas de los Ganadores por Ronda */
-#rounds-winners-grid p {
-    font-size: 1rem; /* Tamaño del texto */
-    font-weight: bold; /* Resaltar */
-    color: #ffda2d; /* Amarillo vibrante */
-    text-align: center; /* Centrar texto */
-    padding: 10px; /* Espaciado interno */
-    border-radius: 10px; /* Bordes redondeados */
-    background: linear-gradient(145deg, #3b3b3b, #4b4b4b); /* Fondo degradado */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+
+.result-card {
+    background: linear-gradient(145deg, #3b3b3b, #4b4b4b);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Efecto Hover en las Tarjetas */
-#rounds-winners-grid p:hover {
-    transform: scale(1.05); /* Zoom suave */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), 0 0 10px #ffd700; /* Aumentar sombra */
+.result-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Animación para Aparición de Tarjetas */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.result-card h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffda2d;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: 15px;
 }
 
-#rounds-winners-grid p {
-    animation: fadeIn 0.5s ease-out;
+.result-card p {
+    font-size: 1rem;
+    color: white;
+    margin: 10px 0;
 }
 
-/* Responsive: Pantallas Pequeñas */
+.result-card p span {
+    font-weight: bold;
+    color: #ffd700;
+}
+
+/* ==========================================
+   9. Spinner
+========================================== */
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.spinner-circle {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid #ffda2d;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* ==========================================
+   10. Responsiveness
+========================================== */
 @media screen and (max-width: 768px) {
-    #final-summary {
+    .game-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .card {
         padding: 15px;
     }
 
-    #global-winner {
-        font-size: 1.5rem; /* Reducir tamaño */
+    .card h3 {
+        font-size: 1.2rem;
     }
 
-    #rounds-winners-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Menos ancho por columna */
-        gap: 10px; /* Reducir espaciado */
-    }
-
-    #rounds-winners-grid p {
-        font-size: 0.9rem; /* Reducir tamaño del texto */
-        padding: 8px; /* Reducir padding interno */
+    .card button {
+        font-size: 0.9rem;
     }
 }
 
-@media screen and (max-width: 480px) {
-    #global-winner {
-        font-size: 1.3rem;
-        padding: 10px;
-    }
+/* ==========================================
+   11. Botones de Resultados
+========================================== */
+.unlock-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: linear-gradient(145deg, #3b3b3b, #4b4b4b);
+    color: #ffda2d;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
-    #rounds-winners-grid {
-        grid-template-columns: 1fr; /* Una sola columna en pantallas muy pequeñas */
+.unlock-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5), 0 0 10px #ffd700;
+}
+
+.lock-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: linear-gradient(145deg, #c0392b, #e74c3c);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.lock-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================
+   12. Modal de Confirmación
+========================================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #3b3b3b;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    width: 90%;
+    animation: scaleIn 0.3s ease-out;
+}
+
+.modal-content h2 {
+    font-size: 1.8rem;
+    color: #ffda2d;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.confirm-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.confirm-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.cancel-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cancel-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Animación del modal */
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
     }
 }

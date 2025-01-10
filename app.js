@@ -1,233 +1,219 @@
-// Configuración de Parse
+// Inicialización de Parse
 Parse.initialize("ODRvdbKJuXMlb2KGoqC40RTm6aMIMR0cNyy2LLAJ", "N84W4tFPD9TFu6dsCIjddsJtNrZFLBc6ChshauCx");
 Parse.serverURL = "https://parseapi.back4app.com";
 
+let currentRound = null;
+let selectedTeam = null; // Equipo seleccionado para votar
+let roundsData = {}; // Objeto para almacenar el estado de cada ronda
 
-// Inicializar Swiper
-const swiper = new Swiper('.swiper', {
-    loop: true,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-});
+/**
+ * Muestra el spinner de carga.
+ */
+function showLoadingSpinner() {
+    document.getElementById("loading-spinner").style.display = "block";
+}
 
-async function vote(roundNumber, team) {
+/**
+ * Oculta el spinner de carga.
+ */
+function hideLoadingSpinner() {
+    document.getElementById("loading-spinner").style.display = "none";
+}
+
+/**
+ * Carga las rondas desde Parse y verifica si el usuario ha votado.
+ */
+async function loadRounds() {
+    showLoadingSpinner(); // Mostrar el spinner al iniciar la carga
+
     try {
-        // Llamar a la Cloud Function con roundNumber y team
-        const response = await Parse.Cloud.run("voteForTeam", {
-            roundNumber: roundNumber, // Número del round
-            team: team,               // Equipo (e.g., "teamRed")
-        });
+        const userId = Parse.User.current() ? Parse.User.current().id : getClientId();
 
-        // Marcar el round como votado en localStorage
-        localStorage.setItem(`round${roundNumber}-voted`, true);
+        // Obtener datos de las rondas
+        const response = await Parse.Cloud.run("getRoundsData");
 
-        // Deshabilitar los botones del round
-        disableVoting(`round${roundNumber}`);
-
-        window.location.reload();
-    } catch (error) {
-        console.error(`Error al votar: ${error.message}`);
-    }
-}
-
-async function loadRoundsData() {
-    try {
-        const roundsData = await Parse.Cloud.run("getRoundsData");
-        console.log("Datos recibidos de la Cloud Function:", roundsData);
-
-        roundsData.forEach((round) => {
-            const roundId = `round${round.round}`;
-            const redPoints = document.getElementById(`${roundId}-red-points`);
-            const bluePoints = document.getElementById(`${roundId}-blue-points`);
-            const greenPoints = document.getElementById(`${roundId}-green-points`);
-            const yellowPoints = document.getElementById(`${roundId}-yellow-points`);
-
-            // Actualizar puntos y agregar animación
-            updatePoints(redPoints, round.teamRed);
-            updatePoints(bluePoints, round.teamBlue);
-            updatePoints(greenPoints, round.teamGreen);
-            updatePoints(yellowPoints, round.teamYellow);
-
-            // Deshabilitar botones si ya votó
-            if (localStorage.getItem(`${roundId}-voted`)) {
-                disableVoting(roundId);
-            }
-
-            // Calcular y mostrar los ganadores por ronda
-            displayGlobalWinner(roundsData);
-        });
-    } catch (error) {
-        console.error(`Error al cargar los datos de los rounds: ${error.message}`);
-    }
-}
-
-function updatePoints(element, newValue) {
-    if (element.textContent !== `${newValue} votos`) {
-        element.textContent = `${newValue} votos`;
-        element.classList.add("updated"); // Agregar clase para animación
-        setTimeout(() => element.classList.remove("updated"), 1000); // Remover después de 1 segundo
-    }
-}
-
-
-
-// Función para deshabilitar botones de votación
-function disableVoting(roundId) {
-    const buttons = document.querySelectorAll(`#${roundId} button`);
-    buttons.forEach((button) => {
-        button.disabled = true;
-        button.style.opacity = 0.5;
-        button.style.cursor = "not-allowed";
-    });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const swiper = new Swiper('.swiper', {
-        loop: true, // No repetir las diapositivas
-        centeredSlides: true, // Centramos las diapositivas
-        slidesPerView: 1, // Mostramos solo una diapositiva a la vez
-        spaceBetween: 0, // Sin espacio entre las diapositivas
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
-
-    // Restaurar el round activo al recargar la página
-    const savedIndex = localStorage.getItem("currentRoundIndex");
-    if (savedIndex !== null && !isNaN(savedIndex)) {
-        swiper.slideToLoop(parseInt(savedIndex, 10), 0); // Navegar al índice guardado
-    } else {
-        swiper.slideTo(0, 0); // Ir a la primera diapositiva si no hay índice guardado
-    }
-    // Cargar los datos iniciales
-    loadRoundsData();
-});
-
-function calculateGlobalWinner(roundsData) {
-    const teamWins = {
-        Rojo: 0,
-        Azul: 0,
-        Verde: 0,
-        Naranja: 0,
-    };
-
-    // Calcular las victorias por equipo
-    roundsData.forEach((round) => {
-        const teams = {
-            Rojo: round.teamRed || 0,
-            Azul: round.teamBlue || 0,
-            Verde: round.teamGreen || 0,
-            Naranja: round.teamYellow || 0,
-        };
-
-        // Determinar el máximo de votos
-        const maxVotes = Math.max(...Object.values(teams));
-        const winningTeams = Object.keys(teams).filter(
-            (team) => teams[team] === maxVotes && maxVotes > 0
-        );
-
-        // Incrementar el contador de victorias para los equipos ganadores
-        winningTeams.forEach((team) => {
-            teamWins[team]++;
-        });
-    });
-
-    // Determinar el equipo con más victorias
-    const maxWins = Math.max(...Object.values(teamWins));
-    const globalWinners = Object.keys(teamWins).filter(
-        (team) => teamWins[team] === maxWins
-    );
-
-    return { teamWins, globalWinners, maxWins };
-}
-
-function displayGlobalWinner(roundsData) {
-    const globalWinnerText = document.getElementById("global-winner");
-    const roundsWinnersContainer = document.getElementById("rounds-winners-grid");
-
-    if (!globalWinnerText) {
-        console.error("El elemento #global-winner no se encuentra en el DOM.");
-        return;
-    }
-
-    if (!roundsWinnersContainer) {
-        console.error("El elemento #rounds-winners-grid no se encuentra en el DOM.");
-        return;
-    }
-
-  
-
-    // Continuar con la lógica si hay al menos 6 rondas
-    const { teamWins, globalWinners, maxWins } = calculateGlobalWinner(roundsData);
-
-    if (globalWinners.length === 1) {
-        globalWinnerText.textContent = `Equipo ${globalWinners[0]}: ${maxWins} rondas ganadas`;
-        globalWinnerText.style.backgroundColor = getTeamColor(globalWinners[0]);
-    } else if (globalWinners.length > 1) {
-        globalWinnerText.textContent = `Empate entre: ${globalWinners.join(
-            " y "
-        )} (${maxWins} rondas ganadas cada uno)`;
-        globalWinnerText.style.backgroundColor = "#3b3b3b"; // Gris neutro en caso de empate
-    } else {
-        globalWinnerText.textContent = "Sin ganador global";
-        globalWinnerText.style.backgroundColor = "#3b3b3b";
-    }
-
-    const round6 = roundsData.find((round) => round.round === 6);
-
-    if (!round6 || (round6.teamRed === 0 && round6.teamBlue === 0 && round6.teamGreen === 0 && round6.teamYellow === 0)) {
-        globalWinnerText.textContent = "Aún no lo sabemos...";
-        globalWinnerText.style.backgroundColor = "#3b3b3b"; // Fondo neutro
-    }
-
-    // Mostrar los ganadores por ronda en un grid
-    roundsWinnersContainer.innerHTML = ""; // Limpiar contenido previo
-    roundsData.forEach((round, index) => {
-        const teams = {
-            Rojo: round.teamRed || 0,
-            Azul: round.teamBlue || 0,
-            Verde: round.teamGreen || 0,
-            Naranja: round.teamYellow || 0,
-        };
-
-        const maxVotes = Math.max(...Object.values(teams));
-        const winningTeams = Object.keys(teams).filter(
-            (team) => teams[team] === maxVotes && maxVotes > 0
-        );
-
-        let roundClass = "round-winner-none";
-        if (winningTeams.length === 1) {
-            roundClass = `round-winner-${winningTeams[0].toLowerCase()}`;
+        if (!response || response.length === 0) {
+            document.getElementById("game-buttons").innerHTML = "<p>No hay rondas disponibles.</p>";
+            return;
         }
 
-        const roundWinnerHTML = `
-            <p class="${roundClass}">
-                <strong>Ronda ${index + 1}:</strong> ${
-            winningTeams.length > 0
-                ? winningTeams.join(" y ") + ` (${maxVotes} votos)`
-                : "Sin ganador"
-        }</p>
+        // Verificar el estado de votación para cada ronda
+        for (const round of response) {
+            const voteResponse = await Parse.Cloud.run("checkUserVote", {
+                roundNumber: round.round,
+                userId: userId,
+            });
+
+            // Almacenar datos de la ronda
+            roundsData[round.round] = {
+                Unlocked: round.Unlocked,
+                hasVoted: voteResponse.hasVoted,
+                team: voteResponse.team,
+            };
+        }
+
+        renderRounds(response); // Renderizar los botones
+    } catch (error) {
+        console.error("Error al cargar las rondas:", error.message);
+        document.getElementById("game-buttons").innerHTML = `
+            <p>Error al cargar las rondas. Por favor, inténtalo más tarde.</p>
         `;
-        roundsWinnersContainer.innerHTML += roundWinnerHTML;
+    } finally {
+        hideLoadingSpinner(); // Ocultar el spinner al terminar la carga
+    }
+}
+
+/**
+ * Renderiza los botones de las rondas.
+ * @param {Array} rounds - Datos de las rondas.
+ */
+function renderRounds(rounds) {
+    const gameButtonsContainer = document.getElementById("game-buttons");
+    gameButtonsContainer.innerHTML = ""; // Limpiar el contenedor
+
+    rounds.forEach((round) => {
+        const button = document.createElement("button");
+        button.id = `game${round.round}`;
+        button.classList.add("game-btn");
+        button.textContent = `Round ${round.round}`;
+
+        // Habilitar o deshabilitar según el estado de "Unlocked"
+        if (round.Unlocked) {
+            button.disabled = false;
+            button.onclick = () => selectGame(round.round);
+        } else {
+            button.disabled = true;
+        }
+
+        gameButtonsContainer.appendChild(button);
     });
 }
 
+/**
+ * Selecciona un juego y muestra la pantalla de votación.
+ * @param {number} roundNumber - El número del juego seleccionado.
+ */
+function selectGame(roundNumber) {
+    currentRound = roundNumber;
 
+    // Ocultar la selección de juegos y mostrar la votación
+    document.getElementById("game-selection").style.display = "none";
+    document.getElementById("game-voting").style.display = "block";
 
-function getTeamColor(teamName) {
-    switch (teamName.toLowerCase()) {
-        case "rojo":
-            return "#e74c3c";
-        case "azul":
-            return "#3498db";
-        case "verde":
-            return "#2ecc71";
-        case "amarillo":
-            return "#f1c40f";
-        default:
-            return "#3b3b3b"; // Gris neutro
+    // Actualizar el título de la ronda
+    const gameTitle = document.getElementById("game-title");
+    gameTitle.textContent = `Round ${roundNumber} - Vota por tu equipo`;
+
+    // Mostrar el mensaje o los botones según el estado
+    const roundData = roundsData[roundNumber];
+    if (roundData.hasVoted) {
+        showVoteMessage(roundData.team);
+    } else {
+        showVoteButtons();
     }
 }
+
+/**
+ * Muestra los botones de votación.
+ */
+function showVoteButtons() {
+    document.querySelector(".cards").innerHTML = `
+        <div class="card red">
+            <h3>Equipo Rojo</h3>
+            <button onclick="confirmVote('teamRed')">Votar</button>
+        </div>
+        <div class="card blue">
+            <h3>Equipo Azul</h3>
+            <button onclick="confirmVote('teamBlue')">Votar</button>
+        </div>
+    `;
+}
+
+/**
+ * Muestra un mensaje indicando que ya se ha votado.
+ * @param {string} team - El equipo al que se votó ("teamRed" o "teamBlue").
+ */
+function showVoteMessage(team) {
+    const teamName = team === "teamRed" ? "Rojo" : "Azul";
+    document.querySelector(".cards").innerHTML = `
+        <div class="vote-message">
+            <h3>Ya has votado al equipo ${teamName}.</h3>
+        </div>
+    `;
+}
+
+/**
+ * Muestra el modal de confirmación para votar.
+ * @param {string} team - El equipo seleccionado ("teamRed" o "teamBlue").
+ */
+function confirmVote(team) {
+    selectedTeam = team;
+    const teamName = team === "teamRed" ? "Equipo Rojo" : "Equipo Azul";
+    document.getElementById("selected-team").textContent = teamName;
+
+    // Mostrar el modal
+    document.getElementById("vote-confirm-modal").style.display = "flex";
+}
+
+/**
+ * Cierra el modal de confirmación.
+ */
+function closeModal() {
+    selectedTeam = null;
+    document.getElementById("vote-confirm-modal").style.display = "none";
+}
+
+/**
+ * Envía el voto seleccionado.
+ */
+async function submitVote() {
+    if (!selectedTeam || !currentRound) {
+        alert("Ocurrió un error. Intenta de nuevo.");
+        return;
+    }
+
+    const userId = Parse.User.current() ? Parse.User.current().id : getClientId();
+
+    try {
+        await Parse.Cloud.run("voteForTeam", {
+            roundNumber: currentRound,
+            team: selectedTeam,
+            userId: userId,
+        });
+
+        closeModal(); // Cerrar el modal
+        roundsData[currentRound].hasVoted = true; // Actualizar estado local
+        roundsData[currentRound].team = selectedTeam;
+        showVoteMessage(selectedTeam); // Mostrar mensaje de votación
+    } catch (error) {
+        console.error("Error al votar:", error.message);
+        alert("Hubo un error al registrar tu voto. Inténtalo de nuevo.");
+        closeModal();
+    }
+}
+
+/**
+ * Genera un identificador único para el cliente si no está autenticado.
+ */
+function getClientId() {
+    let clientId = localStorage.getItem("clientId");
+    if (!clientId) {
+        clientId = "anon_" + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem("clientId", clientId);
+    }
+    return clientId;
+}
+
+/**
+ * Regresa a la pantalla de selección de juegos.
+ */
+function backToSelection() {
+    currentRound = null;
+
+    // Ocultar la votación y mostrar la selección
+    document.getElementById("game-voting").style.display = "none";
+    document.getElementById("game-selection").style.display = "block";
+}
+
+// Cargar las rondas al cargar la página
+document.addEventListener("DOMContentLoaded", loadRounds);

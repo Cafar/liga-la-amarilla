@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Liga La Amarilla</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-title">
+            <img src="logo.png" alt="Logo Liga La Amarilla" class="logo">
+        </div>
+    </header>
+
+    <main class="results">
+        <h1>Resultados por Juego</h1>
+        <div id="results-container" class="results-grid">
+            <!-- Los resultados se cargarán dinámicamente aquí -->
+        </div>
+
+        <!-- Botón para reiniciar todos los votos -->
+        <div class="reset-container">
+            <button class="reset-btn" onclick="resetAllVotes()">Reiniciar Todo</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 Liga La Amarilla - Web creada por <a href="http://rafacarneros.net" target="_blank">Rafa Carneros</a></p>
+    </footer>
+
+    <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+    <script src="results.js"></script>
+</body>
+</html>
